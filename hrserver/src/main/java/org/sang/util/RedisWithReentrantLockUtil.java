@@ -23,7 +23,7 @@ public class RedisWithReentrantLockUtil {
     }
 
     private boolean _lock(String key) {
-        return jedis.set(key, "", "nx", "ex", 5L) != null;
+        return jedis.set(key, "") != null;
     }
 
     private void _unlock(String key) {
