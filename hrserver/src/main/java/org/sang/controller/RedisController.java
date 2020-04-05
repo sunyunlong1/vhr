@@ -16,4 +16,14 @@ public class RedisController {
     public String sendMsg(String id,String msg,String isNow){
         return redisMsgService.sendMsg(id,msg,isNow);
     }
+
+    @RequestMapping("/insert")
+    public String insert(){
+        return redisMsgService.insert();
+    }
+
+    @RequestMapping("/kill")
+    public String kill(){
+        return redisMsgService.kill();
+    }
 }

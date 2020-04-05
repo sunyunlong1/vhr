@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,6 @@ import java.util.stream.Stream;
 @Component
 @Slf4j
 public class RedisUtil {
-
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -145,4 +145,23 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 插入
+     * @param key
+     * @param num
+     */
+    public void insert(String key,String num){
+        ValueOperations<String, String> opsForValue
+                =stringRedisTemplate.opsForValue();
+        opsForValue.set(key,num);
+    }
+
+    /**
+     * 库存减1
+     * @param key
+     */
+    public void sub(String key){
+        stringRedisTemplate.opsForValue().increment(key, -1);
+        log.info("当前剩余库存"+stringRedisTemplate.opsForValue().get(key));
+    }
 }
